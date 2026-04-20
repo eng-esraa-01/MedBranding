@@ -1,0 +1,113 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import './Hero.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+
+const images = [
+  '/images/doctor.webp',
+  '/images/doctor2.webp',
+  '/images/doctor3.webp',
+  '/images/doctor4.webp',
+  '/images/doctor5.webp',
+];
+
+const Hero: React.FC = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="hero">
+      <div className="hero-container">
+        <div className="hero-content">
+          <motion.h1
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
+            Crafting your digital identity{' '}
+            <span className="highlight">as a distinguished doctor</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          >
+            At MedBranding, we help doctors and medical entities build a strong and
+            professional digital presence through website design, graphics, and
+            promotional video production of the highest standards.
+          </motion.p>
+
+          <motion.div
+            className="hero-btns"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <button className="btn-main" onClick={() => document.getElementById('web-design')?.scrollIntoView({ behavior: 'smooth' })}>Explore Services</button>
+            <a href="https://wa.me/201555855857" target="_blank" rel="noopener noreferrer"><button className="btn-outline">Contact Us</button></a>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="hero-image"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        >
+          <div className="image-wrapper">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                className="slide-image"
+              >
+                <Image
+                  src={images[current]}
+                  alt="Doctor Branding"
+                  width={800}
+                  height={800}
+                  style={{ width: '100%', height: 'auto' }}
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+            <div className="blob-bg"></div>
+
+            <div className="slide-dots">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  className={`slide-dot ${i === current ? 'active' : ''}`}
+                  onClick={() => setCurrent(i)}
+                  aria-label={`Image ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="hero-scroll-indicator">
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="dot"
+        />
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
