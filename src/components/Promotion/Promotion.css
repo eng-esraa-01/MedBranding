@@ -117,3 +117,102 @@
     justify-content: center;
   }
 }
+
+/* ── RTL overrides ── */
+
+/* Flip grid: text left, image right in RTL */
+.promotion-container--rtl {
+  direction: rtl;
+}
+
+/* In LTR: image is col-1, text is col-2.
+   In RTL with --rtl class: text becomes col-1 (right), image becomes col-2 (left).
+   We already moved text first in DOM, so just push image to the end visually. */
+.promotion-container--rtl .promotion-image {
+  order: 1;           /* image goes after text → appears on the left */
+}
+
+.promotion-container--rtl .promotion-text {
+  order: 0;
+  text-align: right;
+}
+
+.promotion-container--rtl .promotion-text p {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.promotion-container--rtl .platform-icons {
+  justify-content: flex-start;   /* right-aligned in RTL */
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .promotion-container--rtl .promotion-image {
+    order: unset;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .promotion-container--rtl .promotion-text {
+    text-align: center;
+  }
+
+  .promotion-container--rtl .platform-icons {
+    justify-content: center;
+  }
+}
+
+/* ── Video Modal ── */
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 69, 88, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.video-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+  aspect-ratio: 16 / 9;
+}
+
+.video-modal-player {
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+  object-fit: contain;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.video-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

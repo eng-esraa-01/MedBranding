@@ -58,6 +58,32 @@
   color: var(--secondary);
 }
 
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-lang {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 0;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-width: 70px;
+  text-align: center;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-lang:hover {
+  background: var(--primary);
+  color: white;
+}
+
+
 .btn-primary {
   background: var(--primary);
   color: white;
@@ -65,6 +91,8 @@
   border-radius: 50px;
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(4, 69, 88, 0.2);
+  min-width: 120px;
+  text-align: center;
 }
 
 .btn-primary:hover {
@@ -117,3 +145,23 @@
     display: block;
   }
 }
+
+/* ── RTL overrides ── */
+[dir='rtl'] .btn-primary {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+[dir='rtl'] .navbar-container {
+  flex-direction: row-reverse;
+}
+
+[dir='rtl'] .nav-menu {
+  flex-direction: row-reverse;
+  direction: ltr;
+}
+
+[dir='rtl'] .mobile-menu ul {
+  text-align: right;
+}
+

@@ -1,0 +1,213 @@
+.process {
+  background: linear-gradient(160deg, #ffffff 0%, #f0f7f4 50%, #e8f4f0 100%);
+  width: 100%;
+  padding: 110px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Background shapes ── */
+.process-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.process-shape--ring {
+  width: 350px;
+  height: 350px;
+  top: -100px;
+  left: -100px;
+  border-radius: 50%;
+  border: 2px dashed rgba(136, 193, 171, 0.2);
+}
+
+.process-shape--circle {
+  width: 500px;
+  height: 500px;
+  bottom: -200px;
+  right: -150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(136, 193, 171, 0.1) 0%, transparent 65%);
+}
+
+.process-shape--dots {
+  top: 60px;
+  right: 6%;
+  width: 130px;
+  height: 130px;
+  background-image: radial-gradient(circle, rgba(136, 193, 171, 0.35) 1.5px, transparent 1.5px);
+  background-size: 15px 15px;
+}
+
+.process-shape--square {
+  width: 120px;
+  height: 120px;
+  bottom: 80px;
+  left: 8%;
+  border: 2px solid rgba(4, 69, 88, 0.07);
+  border-radius: 24px;
+}
+
+/* ── Container ── */
+.process-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.process-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.process-header h2 {
+  font-size: 2.8rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.process-header p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── Steps ── */
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  align-items: start;
+}
+
+/* ── Single step ── */
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+/* Connector line between steps */
+.process-connector {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--secondary), rgba(136, 193, 171, 0.3));
+  z-index: 0;
+}
+
+[dir='rtl'] .process-connector {
+  left: auto;
+  right: 50%;
+  background: linear-gradient(270deg, var(--secondary), rgba(136, 193, 171, 0.3));
+}
+
+/* Number badge */
+.process-step-number {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--secondary);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  background: rgba(136, 193, 171, 0.12);
+  border: 1.5px solid rgba(136, 193, 171, 0.3);
+  border-radius: 50px;
+  padding: 4px 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon circle */
+.process-step-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--secondary);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 24px rgba(136, 193, 171, 0.3);
+  transition: all 0.3s ease;
+}
+
+.process-step:hover .process-step-icon {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 12px 32px rgba(4, 69, 88, 0.25);
+}
+
+/* Content */
+.process-step-content {
+  position: relative;
+  z-index: 1;
+}
+
+.process-step-content h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.process-step-content p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 0;
+  }
+
+  .process-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .process {
+    padding: 70px 20px;
+  }
+
+  .process-header h2 {
+    font-size: 2rem;
+  }
+
+  .process-steps {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ── RTL ── */
+[dir='rtl'] .process-header {
+  text-align: center;
+}
+
+[dir='rtl'] .process-step {
+  text-align: center;
+}

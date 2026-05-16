@@ -1,0 +1,132 @@
+.clients {
+  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, #e4e4e4 50%, #033644 100%);
+  width: 100%;
+  padding: 100px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Background shapes ── */
+.clients-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.clients-shape--ring {
+  width: 300px;
+  height: 300px;
+  top: -80px;
+  right: 5%;
+  border-radius: 50%;
+  border: 2px dashed rgba(136, 193, 171, 0.2);
+}
+
+.clients-shape--dots {
+  bottom: 40px;
+  left: 5%;
+  width: 130px;
+  height: 130px;
+  background-image: radial-gradient(circle, rgba(13, 45, 33, 0.25) 2px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+.clients-shape--blob {
+  width: 400px;
+  height: 400px;
+  bottom: -150px;
+  right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(136, 193, 171, 0.08) 0%, transparent 65%);
+}
+
+/* ── Container ── */
+.clients-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.clients-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.clients-header h2 {
+  font-size: 2.8rem;
+  color: #033644;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.clients-header h2 .highlight {
+  color: var(--secondary);
+}
+
+.clients-header p {
+  color: #033644;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── Logos grid ── */
+.clients-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.clients-logo-card {
+  background: rgb(255, 255, 255);
+  border: 1px solid rgba(94, 150, 130, 0.759);
+  border-radius: 20px;
+  padding: 24px;
+  width: 180px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: #033644 0 0 10px;
+}
+
+.clients-logo-card:hover {
+  border-color: var(--secondary);
+}
+
+.clients-logo-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .clients {
+    padding: 70px 20px;
+  }
+
+  .clients-header h2 {
+    font-size: 2rem;
+  }
+
+  .clients-logo-card {
+    width: 140px;
+    height: 110px;
+    padding: 16px;
+  }
+}
+
+/* ── RTL ── */
+[dir='rtl'] .clients-header {
+  text-align: center;
+}

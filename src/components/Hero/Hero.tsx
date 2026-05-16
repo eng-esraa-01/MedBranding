@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './Hero.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useLanguage } from '@/lib/LanguageContext';
 
 const images = [
   '/images/doctor.webp',
@@ -11,10 +12,13 @@ const images = [
   '/images/doctor3.webp',
   '/images/doctor4.webp',
   '/images/doctor5.webp',
+  '/images/doctor7.webp',
+
 ];
 
 const Hero: React.FC = () => {
   const [current, setCurrent] = useState(0);
+  const { t, isRTL } = useLanguage();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,25 +29,25 @@ const Hero: React.FC = () => {
 
   return (
     <section className="hero">
-      <div className="hero-container">
+      <div className={`hero-container${isRTL ? ' hero-container--rtl' : ''}`}>
+
+        {/* Content always first in DOM; CSS order flips visually in RTL */}
         <div className="hero-content">
           <motion.h1
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            Crafting your digital identity{' '}
-            <span className="highlight">as a distinguished doctor</span>
+            {t.hero.title}{' '}
+            <span className="highlight">{t.hero.titleHighlight}</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           >
-            At MedBranding, we help doctors and medical entities build a strong and
-            professional digital presence through website design, graphics, and
-            promotional video production of the highest standards.
+            {t.hero.description}
           </motion.p>
 
           <motion.div
@@ -52,11 +56,27 @@ const Hero: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <button className="btn-main" onClick={() => document.getElementById('web-design')?.scrollIntoView({ behavior: 'smooth' })}>Explore Services</button>
-            <a href="https://wa.me/201555855857" target="_blank" rel="noopener noreferrer"><button className="btn-outline">Contact Us</button></a>
+            <button
+              className="btn-main"
+              onClick={() =>
+                document
+                  .getElementById('web-design')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }
+            >
+              {t.hero.exploreServices}
+            </button>
+            <a
+              href="https://wa.me/201555855857"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="btn-outline">{t.hero.contactUs}</button>
+            </a>
           </motion.div>
         </div>
 
+        {/* Image */}
         <motion.div
           className="hero-image"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -97,6 +117,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
       </div>
 
       <div className="hero-scroll-indicator">

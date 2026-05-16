@@ -1,37 +1,66 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Services.css';
 import { motion } from 'framer-motion';
-import { Palette, Video, Globe } from 'lucide-react';
+import { Palette, Video, Globe, CheckCircle } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
-const Services: React.FC = () => {
-  const serviceItems = [
-    {
-      id: 'web-design',
-      icon: <Globe size={40} />,
-      title: 'Medical Website Design',
-      description:
-        'We design an electronic website that matches your identity as a doctor, making it easy for patients to communicate with you and book appointments smoothly.',
-      features: ['Mobile Responsive', 'Appointment Booking System', 'SEO Optimized'],
-    },
-    {
-      id: 'graphic-design',
-      icon: <Palette size={40} />,
-      title: 'Visual Identity Development',
-      description:
-        "Designing logos and visual schemes that reflect your professionalism and excellence in the medical field, to enhance patients' trust in you.",
-      features: ['Logo Design', 'Social Media Posts', 'Medical Printables'],
-    },
-    {
-      id: 'video-production',
-      icon: <Video size={40} />,
-      title: 'Video and Reels Production',
-      description:
-        'Professional promotional videos and reels that highlight your services and build a bridge of effective communication with your audience on social platforms.',
-      features: ['Professional Filming', 'Creative Editing', 'Marketing Scenarios'],
-    },
-  ];
+const currencies = [
+  { code: 'EGP', label: 'EGP', symbol: 'ج.م' },
+  { code: 'SAR', label: 'SAR', symbol: '⃁' },
+  { code: 'USD', label: 'USD', symbol: '$' },
+  { code: 'KWD', label: 'KWD', symbol: 'د.ك' },
+  { code: 'TRY', label: 'TRY', symbol: '₺' },
+];
+
+const BASE_PRICES_EGP = [9999, 4999, 7999];
+const serviceIcons = [<Globe size={36} />, <Palette size={36} />, <Video size={36} />];
+const serviceBadgeKeys = ['mostPopular', 'none', 'bestValue'] as const;
+
+export default function Services() {
+  const [activeCurrency, setActiveCurrency] = useState(0);
+  const [rates, setRates] = useState<Record<string, number>>({
+    EGP: 1,
+    SAR: 0.082,
+    USD: 0.021,
+    KWD: 0.0064,
+    TRY: 0.68,
+  });
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    fetch('https://open.er-api.com/v6/latest/EGP')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.rates) {
+          setRates({
+            EGP: 1,
+            SAR: data.rates.SAR,
+            USD: data.rates.USD,
+            KWD: data.rates.KWD,
+            TRY: data.rates.TRY,
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const convert = (egp: number) => {
+    const cur = currencies[activeCurrency];
+    const converted = egp * (rates[cur.code] ?? 1);
+    return converted < 1
+      ? converted.toFixed(3)
+      : converted < 10
+      ? converted.toFixed(2)
+      : Math.round(converted).toLocaleString();
+  };
+
+  const getBadgeLabel = (key: (typeof serviceBadgeKeys)[number]) => {
+    if (key === 'mostPopular') return t.services.mostPopular;
+    if (key === 'bestValue') return t.services.bestValue;
+    return null;
+  };
 
   return (
     <section className="services" id="web-design">
@@ -42,7 +71,9 @@ const Services: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            Integrated <span className="highlight">Marketing Services</span> for Doctors
+            {t.services.heading}{' '}
+            <span className="highlight">{t.services.headingHighlight}</span>{' '}
+            {t.services.headingEnd}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -50,39 +81,85 @@ const Services: React.FC = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            We provide innovative solutions aimed at transforming your medical practice
-            into a powerful and trusted brand.
+            {t.services.subheading}
           </motion.p>
         </div>
 
+        {/* <motion.div
+          className="services-intro"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className="services-intro-label">{t.services.introLabel}</span>
+          <p className="services-intro-text">{t.services.introText}</p>
+        </motion.div> */}
+
         <div className="services-grid">
-          {serviceItems.map((item, index) => (
-            <motion.div
-              className="service-card"
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-            >
-              <div className="service-icon">{item.icon}</div>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <ul className="service-features">
-                {item.features.map((f, i) => (
-                  <li key={i}>
-                    <Globe size={16} />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <button className="service-btn">Learn More</button>
-            </motion.div>
-          ))}
+          {t.services.items.map((item, index) => {
+            const badgeLabel = getBadgeLabel(serviceBadgeKeys[index]);
+            const isFeatured = serviceBadgeKeys[index] === 'mostPopular';
+
+            return (
+              <motion.div
+                className={`service-card ${isFeatured ? 'card-featured' : ''}`}
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+              >
+                {badgeLabel && <span className="card-badge">{badgeLabel}</span>}
+                <div className="service-icon">{serviceIcons[index]}</div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+
+                <div className="price-block">
+                  <div className="price-left">
+                    <span className="price-currency">
+                      {currencies[activeCurrency].symbol}
+                    </span>
+                    <span className="price-value">{convert(BASE_PRICES_EGP[index])}</span>
+                  </div>
+                  <div className="currency-switcher">
+                    {currencies.map((c, i) => (
+                      <button
+                        key={c.code}
+                        className={`currency-btn ${i === activeCurrency ? 'active' : ''}`}
+                        onClick={() => setActiveCurrency(i)}
+                      >
+                        {c.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <ul className="service-features">
+                  {item.features.map((f, i) => (
+                    <li key={i}>
+                      <CheckCircle size={16} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="https://wa.me/201555855857"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button
+                    className={`service-btn ${isFeatured ? 'service-btn-featured' : ''}`}
+                  >
+                    {t.services.getStarted}
+                  </button>
+                </a>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-export default Services;
+}

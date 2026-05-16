@@ -90,6 +90,7 @@
   position: relative;
   max-width: 75%;
   margin-left: auto;
+  justify-self: end;
 }
 
 .image-wrapper {
@@ -204,3 +205,53 @@
     margin: 0 auto;
   }
 }
+
+/* ── RTL overrides ── */
+
+/* Flip grid: image left, text right in RTL */
+.hero-container--rtl {
+  direction: rtl;
+}
+
+.hero-container--rtl .hero-image {
+  order: 1;
+  margin-left: 0;
+  margin-right: auto;
+  justify-self: end;
+}
+
+.hero-container--rtl .hero-content {
+  text-align: right;
+  justify-self: start;
+}
+
+.hero-container--rtl .hero-content p {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.hero-container--rtl .hero-btns {
+  justify-content: flex-start;   /* flex-start = right side in RTL */
+}
+
+[dir='rtl'] .hero-content h1 .highlight::after {
+  left: auto;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-container--rtl .hero-image {
+    order: unset;
+    margin: 0 auto;
+    justify-self: center;
+  }
+
+  .hero-container--rtl .hero-content {
+    text-align: center;
+  }
+
+  .hero-container--rtl .hero-btns {
+    justify-content: center;
+  }
+}
+

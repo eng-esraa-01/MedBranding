@@ -83,12 +83,19 @@
   color: var(--secondary);
   padding-left: 5px;
 }
-
 .footer-contact li {
   display: flex;
   align-items: center;
   gap: 12px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-label {
+  flex-shrink: 0;
+}
+
+.contact-value {
+  font-variant-numeric: tabular-nums;
 }
 
 .footer-contact svg {
@@ -101,6 +108,40 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  margin-top: 0;
+}
+
+.footer-legal-links a {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s;
+}
+
+.footer-legal-links a:hover {
+  color: var(--secondary);
+}
+
+.footer-legal-links span {
+  color: rgba(255, 255, 255, 0.2);
 }
 
 .dwam-link {
@@ -133,3 +174,27 @@
     padding: 0 20px;
   }
 }
+
+/* ── RTL overrides ── */
+[dir='rtl'] .footer h3::after {
+  left: auto;
+  right: 0;
+}
+
+[dir='rtl'] .footer-links a:hover {
+  padding-left: 0;
+  padding-right: 5px;
+}
+
+[dir='rtl'] .footer-contact li {
+  text-align: right;
+}
+
+[dir='rtl'] .footer-info p {
+  text-align: right;
+}
+
+[dir='rtl'] .social-links {
+  justify-content: flex-start;
+}
+
