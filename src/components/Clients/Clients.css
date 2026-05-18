@@ -1,6 +1,5 @@
 .clients {
-  background: var(--primary);
-  background: linear-gradient(135deg, var(--primary) 0%, #e4e4e4 50%, #033644 100%);
+  background: linear-gradient(160deg, #ffffff 0%, #f0f7f4 50%, #e8f4f0 100%);
   width: 100%;
   padding: 100px 60px;
   position: relative;
@@ -28,7 +27,7 @@
   left: 5%;
   width: 130px;
   height: 130px;
-  background-image: radial-gradient(circle, rgba(13, 45, 33, 0.25) 2px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgba(136, 193, 171, 0.35) 1.5px, transparent 1.5px);
   background-size: 16px 16px;
 }
 
@@ -58,7 +57,7 @@
 
 .clients-header h2 {
   font-size: 2.8rem;
-  color: #033644;
+  color: var(--primary);
   margin-bottom: 16px;
   line-height: 1.25;
 }
@@ -68,7 +67,7 @@
 }
 
 .clients-header p {
-  color: #033644;
+  color: var(--muted);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
@@ -84,8 +83,8 @@
 }
 
 .clients-logo-card {
-  background: rgb(255, 255, 255);
-  border: 1px solid rgba(94, 150, 130, 0.759);
+  background: white;
+  border: 1.5px solid rgba(136, 193, 171, 0.3);
   border-radius: 20px;
   padding: 24px;
   width: 180px;
@@ -94,13 +93,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease;
-  backdrop-filter: blur(4px);
-  box-shadow: #033644 0 0 10px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 4px 16px rgba(4, 69, 88, 0.07);
+  will-change: transform;
 }
 
 .clients-logo-card:hover {
   border-color: var(--secondary);
+  box-shadow: 0 12px 32px rgba(4, 69, 88, 0.12);
+  transform: translateY(-6px);
 }
 
 .clients-logo-inner {

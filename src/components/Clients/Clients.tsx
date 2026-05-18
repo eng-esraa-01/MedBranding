@@ -72,7 +72,6 @@ const Clients: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(4,69,88,0.12)' }}
             >
               <div className="clients-logo-inner">
                 <Image

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { X, ZoomIn } from 'lucide-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 import { portfolioTranslations } from '@/lib/translations.portfolio';
 import './Portfolio.css';
@@ -64,6 +64,29 @@ export default function Portfolio() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
 
   const filteredImages = allImages.filter((img) => img.category === activeCategory);
+
+  const currentIndex = lightboxImg ? filteredImages.findIndex(img => img.src === lightboxImg) : -1;
+
+  const goNext = useCallback(() => {
+    if (currentIndex < filteredImages.length - 1)
+      setLightboxImg(filteredImages[currentIndex + 1].src);
+  }, [currentIndex, filteredImages]);
+
+  const goPrev = useCallback(() => {
+    if (currentIndex > 0)
+      setLightboxImg(filteredImages[currentIndex - 1].src);
+  }, [currentIndex, filteredImages]);
+
+  useEffect(() => {
+    if (!lightboxImg) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'Escape') setLightboxImg(null);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxImg, goNext, goPrev]);
 
   return (
     <section className="portfolio" id="portfolio">
@@ -152,6 +175,14 @@ export default function Portfolio() {
             exit={{ opacity: 0 }}
             onClick={() => setLightboxImg(null)}
           >
+            {/* Prev button */}
+            {currentIndex > 0 && (
+              <button className="portfolio-lightbox-nav portfolio-lightbox-nav--prev"
+                onClick={e => { e.stopPropagation(); goPrev(); }}>
+                <ChevronLeft size={28} />
+              </button>
+            )}
+
             <motion.div
               className="portfolio-lightbox-content"
               initial={{ scale: 0.8 }}
@@ -159,14 +190,22 @@ export default function Portfolio() {
               exit={{ scale: 0.8 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                className="portfolio-lightbox-close"
-                onClick={() => setLightboxImg(null)}
-              >
+              <button className="portfolio-lightbox-close" onClick={() => setLightboxImg(null)}>
                 <X size={24} />
               </button>
               <img src={lightboxImg} alt="Preview" className="portfolio-lightbox-img" />
+              <div className="portfolio-lightbox-counter">
+                {currentIndex + 1} / {filteredImages.length}
+              </div>
             </motion.div>
+
+            {/* Next button */}
+            {currentIndex < filteredImages.length - 1 && (
+              <button className="portfolio-lightbox-nav portfolio-lightbox-nav--next"
+                onClick={e => { e.stopPropagation(); goNext(); }}>
+                <ChevronRight size={28} />
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

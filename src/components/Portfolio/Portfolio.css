@@ -1,5 +1,5 @@
 .portfolio {
-  background: linear-gradient(160deg, #5d7269 0%, #ffffff 40%, #d3ede4 100%);
+  background: linear-gradient(160deg, #ffffff 0%, #f0f7f4 50%, #e8f4f0 100%);
   width: 100%;
   padding: 110px 60px;
   position: relative;
@@ -319,6 +319,53 @@
 .portfolio-lightbox-close:hover {
   background: rgba(255, 255, 255, 0.25);
   transform: scale(1.1);
+}
+
+/* Nav buttons */
+.portfolio-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.portfolio-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.portfolio-lightbox-nav--prev {
+  left: 20px;
+}
+
+.portfolio-lightbox-nav--next {
+  right: 20px;
+}
+
+/* Counter */
+.portfolio-lightbox-counter {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 14px;
+  border-radius: 50px;
 }
 
 /* ── Responsive ── */
